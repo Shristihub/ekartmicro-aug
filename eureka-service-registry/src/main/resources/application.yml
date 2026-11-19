@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: eureka-registry
+
+server:
+  port: 8761
+  
+eureka:
+  client:
+    register-with-eureka: false   # do not selfregister 
+    fetch-registry: false    # do not fetch registry
+#    service-url:
+#      defaut-zone: http://localhost:8761
+
