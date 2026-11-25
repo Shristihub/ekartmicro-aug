@@ -11,7 +11,7 @@ import org.springframework.web.client.RestClient;
 import com.productcatalogview.exception.ProductNotFoundException;
 import com.productcatalogview.model.Product;
 
-@Service
+//@Service
 public class CatalogViewServiceImpl implements ICatalogViewService{
 	
 	//from here call the other microservice
