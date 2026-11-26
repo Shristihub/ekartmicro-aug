@@ -34,6 +34,7 @@ public class ProductDto {
 	private BrandDto brand; // many to one
 	private List<String> paymentMode; 
 	private List<String> deliveryTypes;
+	private int stock; // to be stored in inventory service
 	
 	
 }

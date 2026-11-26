@@ -11,8 +11,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.productcatalog.config.ProductMapper;
+import com.productcatalog.dtos.InventoryDto;
 import com.productcatalog.dtos.ProductDto;
 import com.productcatalog.exception.ProductNotFoundException;
+import com.productcatalog.feign.IInventoryFeignClient;
 import com.productcatalog.model.Product;
 import com.productcatalog.repository.IProductRepository;
 
@@ -23,9 +25,10 @@ import lombok.RequiredArgsConstructor;
 public class ProductServiceImpl implements IProductService {
 
 	private final IProductRepository productRepository;
-
 	private final ProductMapper mapper;
+	private final IInventoryFeignClient feignClient;
 
+	
 	@Override
 	public void addProduct(ProductDto productDto) {
 		// convert the dto into entity - manualy or using a third party library
@@ -33,7 +36,19 @@ public class ProductServiceImpl implements IProductService {
 		// call the method of ProductMapper
 		Product product = mapper.toProductEntity(productDto);
 		// call save method to insert
-		productRepository.save(product);
+		// get the savedproduct
+		Product savedProduct =  productRepository.save(product);
+		//get the productId
+		int productId =  savedProduct.getProductId();
+		//get the stock from productDto
+		int stock = productDto.getStock();
+		
+		//create an inventorydto object
+		InventoryDto inventoryDto = new InventoryDto(stock,productId);
+		System.out.println(inventoryDto);
+		// make a call to inventoryservice using feign client
+		String status = feignClient.addStock(inventoryDto);
+		System.out.println(status +".........");
 	}
 
 	@Override

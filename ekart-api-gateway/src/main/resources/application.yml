@@ -10,7 +10,7 @@ spring:
       routes:
 
 #    http://localhost:9000/catalog/products/productId/1---------// 
-#    http://localhost:8081/product-api/v1/products/productId/1
+#    http://localhost:8081/catalog-service/v1/products/productId/1
       - id: catalogService
         uri: lb://product-catalog    # application name
         predicates:
@@ -18,7 +18,7 @@ spring:
         filters:
           - AddRequestHeader=X-catalog-header,productcatalog
           - AddResponseHeader=X-catalog-responsetime,"#{T(java.time.LocalDate).now()}"
-          - RewritePath=/catalog/(?<segment>.*),/product-api/v1/${segment}
+          - RewritePath=/catalog/(?<segment>.*),/catalog-service/v1/${segment}
 
 #    http://localhost:9000/view/products/category/sports---
 #------// http://localhost:8082/catalogview/v1/products/category/sports
@@ -33,6 +33,16 @@ spring:
           - RewritePath=/view/(?<segment>.*),/catalogview/v1/${segment}
 
 
+#    http://localhost:9000/catalog/products/productId/1---------// 
+#    http://localhost:8081/catalog-service/v1/products/productId/1
+      - id: catalogService
+        uri: lb://product-catalog    # application name
+        predicates:
+        - Path= /catalog/**
+        filters:
+          - AddRequestHeader=X-catalog-header,productcatalog
+          - AddResponseHeader=X-catalog-responsetime,"#{T(java.time.LocalDate).now()}"
+          - RewritePath=/catalog/(?<segment>.*),/catalog-service/v1/${segment}
 
 
 

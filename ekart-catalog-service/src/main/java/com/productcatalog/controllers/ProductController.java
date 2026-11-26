@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @RestController
-@RequestMapping("/product-api/v1")
+@RequestMapping("/catalog-service/v1")
 @RequiredArgsConstructor
 @RefreshScope
 //@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
